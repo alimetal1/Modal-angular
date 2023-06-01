@@ -1,0 +1,17 @@
+<div *ngIf="isModalOpen" class="custom-modal">
+  <img src="../../assets/Yes_Check_Circle.svg.png" alt="Check Image" class="check-image" style="width: 120px;padding-bottom: 30px;">
+  <h2 class="modal-title">PAGO EXITOSO</h2>
+  <div class="payment-details">
+    <div class="payment-success-message">
+      Estimado usuario, su pago se realizó de forma exitosa. En 24 horas hábiles, su factura impaga será dada de baja.
+      Muchas gracias.
+    </div>
+    <div class="countdown">
+      Esta ventana se cerrará automáticamente en {{ countdown }} segundos
+    </div>
+  </div>
+  <button mat-button class="close-button" (click)="closeModal()">
+    <img src="ruta-a-la-imagen-cerrar" alt="Cerrar" class="close-image">
+    X Cerrar
+  </button>
+</div>
