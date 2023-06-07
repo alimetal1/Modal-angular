@@ -1,0 +1,37 @@
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ModalDialogComponent } from './modal.component';
+
+describe('ModalDialogComponent', () => {
+  let component: ModalDialogComponent;
+  let fixture: ComponentFixture<ModalDialogComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ModalDialogComponent]
+    }).compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ModalDialogComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should start the countdown', fakeAsync(() => {
+    component.countdown = 5;
+    component.startCountdown();
+    expect(component.countdownInterval).toBeDefined();
+    tick(4000);
+    expect(component.countdown).toBe(1);
+    tick(1000);
+    expect(component.countdown).toBe(0);
+  }));
+
+  it('should call onNoClick when countdown reaches 0', fakeAsync(() => {
+    spyOn(component, 'onNoClick');
+    component.countdown = 3;
+    component.startCountdown();
+    tick(3000);
+    expect(component.onNoClick).toHaveBeenCalled();
+  }));
+});
