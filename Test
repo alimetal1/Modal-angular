@@ -1,0 +1,50 @@
+import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import { MatDialogRef } from '@angular/material/dialog';
+import { ModalDialogComponent } from './modal.component';
+
+describe('ModalDialogComponent', () => {
+  let component: ModalDialogComponent;
+  let fixture: ComponentFixture<ModalDialogComponent>;
+  let dialogRef: MatDialogRef<ModalDialogComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ModalDialogComponent],
+      providers: [
+        { provide: MatDialogRef, useValue: {} }
+      ]
+    }).compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ModalDialogComponent);
+    component = fixture.componentInstance;
+    dialogRef = TestBed.inject(MatDialogRef);
+    fixture.detectChanges();
+  });
+
+  it('should create the component', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should start the countdown on initialization', () => {
+    spyOn(component, 'startCountdown');
+    component.ngOnInit();
+    expect(component.startCountdown).toHaveBeenCalled();
+  });
+
+  it('should close the dialog on button click', () => {
+    spyOn(dialogRef, 'close');
+    component.onNoClick();
+    expect(dialogRef.close).toHaveBeenCalled();
+  });
+
+  it('should decrement countdown and close dialog when countdown reaches 0', fakeAsync(() => {
+    spyOn(component, 'onNoClick');
+    component.countdown = 3;
+    component.startCountdown();
+    tick(3000);
+    expect(component.countdown).toBe(0);
+    expect(component.onNoClick).toHaveBeenCalled();
+  }));
+});
